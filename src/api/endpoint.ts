@@ -2,10 +2,10 @@ const headers = {
   public: {
     "content-type": "application/json",
   },
-  token: {
+  token: (token: string) => ({
     "content-type": "application/json",
-    "Authorization": `Bearer `
-  }
+    "Authorization": `Bearer ${token}`
+  })
 }
 
 export const endPoint = {
@@ -33,10 +33,10 @@ export const endPoint = {
   },
 
   basicQuery: {
-    query: () => ({
+    query: (token: string) => ({
       url: "api/v1/basic-query/query",
       method: "POST",
-      headers: headers.token,
+      headers: headers.token(token),
     })
   },
 

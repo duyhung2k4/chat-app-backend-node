@@ -31,8 +31,14 @@ app.get("/", (req: Request, res: Response) => {
 
 // SOCKET
 socketServer.on(SOCKET_DEFAULT.SOCKET_CONNECTED, (socket: Socket) => {
+  console.log("Connect user: ", socket.id);
+
+  const token = socket.handshake.auth as { accessToken: string }
+  console.log(token.accessToken);
+
   socket.on("mess", async ({ mess }: { mess: string }) => {
-    const api = endPoint.basicQuery.query();
+    console.log("Mess: ", mess);
+    const api = endPoint.basicQuery.query(token.accessToken);
     const message: Omit<ModelText, OmitBaseModel | "messageId"> = {
       content: mess,
     }
